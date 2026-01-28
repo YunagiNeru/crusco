@@ -1,0 +1,109 @@
+.card {
+  position: relative; /* リサイズハンドルの基準位置 */
+  background: white;
+  border: var(--card-border-width) solid #eee;
+  border-radius: 8px;
+  padding: var(--card-padding);
+  margin-bottom: 8px; /* Masonry化しても、下マージンは要素自体の属性としてあっても良いが、Masonryコンテナ側でGap制御するなら不要かも。一旦維持。 */
+  cursor: pointer;
+  transition: box-shadow 0.2s; /* サイズ変更時のtransitionは削除（JS制御と競合するため） */
+  overflow: hidden; /* コンテンツがはみ出ないように */
+  box-sizing: border-box; /* paddingを含めたサイズ計算 */
+  
+  /* [追加] 横並びにする */
+  display: flex;
+  align-items: flex-start; /* 上揃え */
+  gap: 8px; 
+}
+
+.card:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.selected {
+  border-color: #646cff; /* アクセントカラー */
+  box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.2);
+}
+
+.contentPreview {
+  font-size: var(--card-font-size);
+  line-height: var(--card-line-height);
+  white-space: pre-wrap; /* 改行をそのまま表示 */
+  flex-grow: 1; /* 残りの幅を使う */
+  color: #333;
+  word-break: break-all; /* 長い単語も折り返す */
+}
+
+/* [追加] ハンドルのスタイル */
+.dragHandle {
+  cursor: grab; /* 掴めるカーソル */
+  color: #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2px; /* アイコンの位置微調整 */
+  flex-shrink: 0; /* 縮まないようにする */
+}
+.dragHandle:active {
+  cursor: grabbing; /* 掴んでいる最中 */
+}
+
+/* 編集用テキストエリア */
+.editor {
+  width: 100%;
+  min-height: 60px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  line-height: 1.5;
+  resize: none; /* 勝手にリサイズさせない */
+  background: transparent;
+  font-family: inherit;
+  flex-grow: 1; /* 残りの幅を使う */
+}
+
+/* 右上に配置する削除ボタン */
+.deleteButton {
+  position: absolute;
+  transition: all 0.2s;
+
+  opacity: 0;
+  transition: opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+
+}
+.deleteButton:hover {
+  background-color: #ff4d4f;
+}
+
+.card:hover .deleteButton,
+.selected .deleteButton {
+  opacity: 1;
+}
+
+/* リサイズハンドルのコンテナ */
+.resizableHandle {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  cursor: se-resize; /* 斜め矢印 */
+  z-index: 10;
+  
+  /* アイコンの色調整 */
+  color: #ccc; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* タッチ操作などで押しやすくするための少しのパディング */
+  padding: 4px;
+}
+
+/* ホバー時は少し濃くする等の演出（お好みで） */
+.resizableHandle:hover {
+  color: #999;
+}
+
+/* リサイズ中はトランジションを切ってスムーズにする */
+.resizing {
+  transition: none !important;
+}

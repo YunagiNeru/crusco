@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  /* border-right は App.tsx で管理しているのでここでは不要あるいは控えめに */
+  background-color: #fafafa;
+}
+
+.header {
+  padding: 16px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f0f0f0;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.scrollArea {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px; /* カードとの間に隙間を作る */
+}
+
+/* ■ リスト表示用のクラス */
+.listLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* カード間の隙間 */
+}
+
+/* ■ タイル表示用のクラス (CSS Grid) */
+.tileLayout {
+  display: grid;
+  /* 幅が許す限り 200px のカラムを詰め込む */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  width: 100%;
+}

@@ -1,0 +1,52 @@
+.container {
+  border-top: 1px solid #ddd;
+  background-color: #fff;
+  padding: 16px;
+  display: flex;
+  align-items: flex-end;
+  padding: 12px;
+  gap: 12px;
+}
+
+.iconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.iconButton:hover {
+  background-color: #f0f0f0;
+}
+
+.inputWrapper {
+  flex: 1; /* 横幅いっぱいに */
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 8px 12px;
+  background-color: #f9f9f9;
+}
+
+.textInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  line-height: 1.5;
+  resize: none; /* 自動リサイズ等はJSでやるのが理想ですが今回は簡易的に */
+  overflow-y: scroll;
+  min-height: 40px;
+  max-height: 600px;
+  font-family: inherit;
+  line-height: 1.5;
+  padding: 8px 12px;
+}

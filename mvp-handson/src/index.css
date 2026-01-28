@@ -1,0 +1,60 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* ■ カラーパレット定義 (ここで一元管理します) */
+  --color-text-main: #213547;
+  --color-text-sub: #666666;
+  --color-background: #ffffff;
+  --color-primary: #1890ff;
+  --color-border: #dddddd;
+
+  /* Card Sizing Variables */
+  --card-padding: 12px;
+  --card-font-size: 14px;
+  --card-line-height: 1.5;
+  --card-border-width: 1px;
+  --card-gap: 16px;
+
+  /* 文字色などを変数で指定 */
+  color: var(--color-text-main);
+  background-color: var(--color-background);
+
+  /* 入力欄のキャレット(カーソル)の色も指定できます */
+  caret-color: var(--color-primary);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+/* ■ 全体の input / textarea に対するリセット */
+input, textarea {
+  color: var(--color-text-main);
+  caret-color: var(--color-primary);
+}
+
+/* リンクなどの色も設定 */
+a {
+  font-weight: 500;
+  color: var(--color-primary);
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}

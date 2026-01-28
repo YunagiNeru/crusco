@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>AteliNote – Quick Capture Mock</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --header-bg: #9c9c9c;
+      --bg-main: #ffffff;
+      --panel-light: #e2e2e2;
+      --panel-dark: #777777;
+      --panel-mid: #d4d4d4;
+      --border-subtle: #c6c6c6;
+      --text-main: #333333;
+      --text-sub: #666666;
+      --radius-lg: 18px;
+      --radius-md: 10px;
+      --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: #dddddd;
+      color: var(--text-main);
+      height: 100vh;
+    }
+
+    .app-root {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+
+    /* ===== HEADER ===== */
+    .app-header {
+      height: 48px;
+      background: var(--header-bg);
+      display: grid;
+      grid-template-columns: 48px 1fr 48px;
+      align-items: center;
+      padding: 0 12px;
+      column-gap: 12px;
+    }
+
+    .header-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: none;
+      background: #ffffff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-title {
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      color: #fdfdfd;
+      letter-spacing: 0.04em;
+    }
+
+    /* ===== 3カラムレイアウト ===== */
+    .app-body {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr) 320px;
+      height: calc(100vh - 48px);
+    }
+
+    /* ===== LEFT SIDEBAR (ナビ + リスト) ===== */
+    .sidebar-left {
+      background: var(--panel-light);
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      padding: 12px 10px;
+      gap: 10px;
+    }
+
+    .sidebar-section {
+      padding-bottom: 10px;
+      border-bottom: 1px solid #d0d0d0;
+    }
+
+    .sidebar-section:last-of-type {
+      border-bottom: none;
+    }
+
+    .sidebar-section[data-label]::before {
+      content: attr(data-label);
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-sub);
+      margin-bottom: 4px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .sidebar-section-title {
+      height: 18px;
+      border-radius: 6px;
+      background: var(--panel-dark);
+      opacity: 0.9;
+      margin-bottom: 6px;
+    }
+
+    .sidebar-item {
+      height: 24px;
+      border-radius: 6px;
+      background: var(--panel-dark);
+      opacity: 0.9;
+      margin-bottom: 4px;
+    }
+
+    /* ===== CENTER: Quick Capture ===== */
+    .quick-main {
+      position: relative;
+      background: var(--bg-main);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .quick-grid-wrapper {
+      position: relative;
+      flex: 1;
+      /* 左右の余白を小さめにしてワイヤーに近づける */
+      margin: 12px 12px 56px;
+    }
+
+    .quick-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-auto-rows: 140px;
+      gap: 10px;
+      padding: 4px;
+    }
+
+    .quick-tile {
+      background: #f3f3f3;
+      border-radius: 16px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quick-tile--tall {
+      grid-row: span 2;
+    }
+
+    .quick-tile--medium {
+      grid-row: span 1;
+    }
+
+    .quick-tile-doc-icon,
+    .quick-tile-play-icon {
+      position: absolute;
+      border-radius: 999px;
+      background: #b0b0b0;
+    }
+
+    .quick-tile-doc-icon {
+      width: 18px;
+      height: 18px;
+      bottom: 8px;
+      right: 8px;
+    }
+
+    .quick-tile-play-icon {
+      width: 36px;
+      height: 24px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .quick-tile-play-icon::before {
+      content: "";
+      position: absolute;
+      left: 13px;
+      top: 6px;
+      border-style: solid;
+      border-width: 6px 0 6px 10px;
+      border-color: transparent transparent transparent #f3f3f3;
+    }
+
+    .quick-tile-audio {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 14px;
+      height: 18px;
+      border-radius: 10px;
+      background: #d0d0d0;
+    }
+
+    .quick-tile-audio::before {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 3px;
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: #b0b0b0;
+    }
+
+    .quick-tile-audio::after {
+      content: "";
+      position: absolute;
+      left: 20px;
+      right: 4px;
+      top: 7px;
+      height: 4px;
+      border-radius: 4px;
+      background: #bcbcbc;
+    }
+
+    /* ===== 下部ツールバー ===== */
+    .quick-toolbar {
+      position: absolute;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .quick-toolbar-row {
+      display: grid;
+      grid-auto-flow: column;
+      gap: 4px;
+      padding: 4px;
+      border-radius: 10px;
+      border: 2px solid #777777;
+      background: #f3f3f3;
+    }
+
+    .quick-toolbar-slot {
+      width: 26px;
+      height: 26px;
+      border-radius: 4px;
+      background: #b0b0b0;
+    }
+
+    .quick-toolbar-slot--active {
+      background: #777777;
+    }
+
+    .quick-toolbar-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: #777777;
+    }
+
+    /* ===== EDITOR OVERLAY ===== */
+    .editor-overlay {
+      position: absolute;
+      /* 中央エリア全体を覆うように調整 */
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 20px;
+      background: #d0d0d0;
+      box-shadow: var(--shadow-soft);
+      display: none;
+      flex-direction: column;
+      padding: 16px 18px 14px;
+    }
+
+    .editor-overlay.is-open {
+      display: flex;
+    }
+
+    .editor-header {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      column-gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .editor-doc-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: #b0b0b0;
+    }
+
+    .editor-title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .editor-title-line {
+      height: 14px;
+      border-radius: 8px;
+      background: #9b9b9b;
+    }
+
+    .editor-subtitle-line {
+      height: 10px;
+      border-radius: 6px;
+      background: #bdbdbd;
+      width: 70%;
+    }
+
+    .editor-close-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: #b0b0b0;
+      border: none;
+      cursor: pointer;
+    }
+
+    .editor-mode-toggle {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .editor-mode-pill {
+      flex: 0 0 auto;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #bdbdbd;
+      font-size: 11px;
+    }
+
+    .editor-mode-pill.is-active {
+      background: #777777;
+      color: #ffffff;
+    }
+
+    .editor-body {
+      flex: 1;
+      border-radius: 14px;
+      background: #e6e6e6;
+      padding: 10px 12px;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      row-gap: 8px;
+    }
+
+    .editor-textarea-mock {
+      border-radius: 10px;
+      background: #f3f3f3;
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .editor-line {
+      height: 10px;
+      border-radius: 5px;
+      background: #d0d0d0;
+    }
+
+    .editor-line:nth-child(2) {
+      width: 95%;
+    }
+
+    .editor-line:nth-child(3) {
+      width: 85%;
+    }
+
+    .editor-line:nth-child(4) {
+      width: 60%;
+    }
+
+    .editor-attachments {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .attachment-pill {
+      flex: 0 0 auto;
+      height: 20px;
+      border-radius: 999px;
+      background: #c4c4c4;
+      width: 80px;
+    }
+
+    .attachment-wave {
+      flex: 1;
+      height: 20px;
+      border-radius: 999px;
+      background: #c4c4c4;
+      position: relative;
+    }
+
+    .attachment-wave::before {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: #b0b0b0;
+    }
+
+    .attachment-wave::after {
+      content: "";
+      position: absolute;
+      left: 24px;
+      right: 6px;
+      top: 8px;
+      height: 4px;
+      border-radius: 4px;
+      background: #bdbdbd;
+    }
+
+    /* ===== RIGHT: AI パネル ===== */
+    .ai-pane-right {
+      background: var(--panel-light);
+      border-left: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      padding: 12px 12px 0;
+      position: relative;
+      transition: transform 0.18s ease, opacity 0.18s ease;
+    }
+
+    .ai-pane-right.is-collapsed {
+      transform: translateX(100%);
+      opacity: 0;
+      pointer-events: none;
+      border-left: none;
+    }
+
+    .ai-header {
+      position: relative;
+      height: 32px;
+      border-bottom: 1px solid #c0c0c0;
+      margin-bottom: 10px;
+    }
+
+    .ai-status-dot {
+      position: absolute;
+      right: 6px;
+      top: 8px;
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: var(--panel-dark);
+    }
+
+    .ai-message-list {
+      flex: 1;
+      padding: 6px 0 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .ai-message-item {
+      height: 26px;
+      border-radius: 6px;
+      background: var(--panel-dark);
+      opacity: 0.9;
+    }
+
+    .ai-input-container {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      height: 72px;
+      border-radius: 16px 16px 0 0;
+      background: var(--panel-dark);
+      display: grid;
+      grid-template-columns: 28px 1fr 28px;
+      align-items: center;
+      padding: 10px 14px;
+      column-gap: 10px;
+    }
+
+    .ai-input-circle {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: #ffffff;
+    }
+
+    .ai-input-field {
+      width: 100%;
+      height: 32px;
+      border-radius: 999px;
+      border: none;
+      padding: 0 10px;
+      font-size: 12px;
+      outline: none;
+    }
+
+    /* ===== RESPONSIVE（簡易） ===== */
+    @media (max-width: 1100px) {
+      .app-body {
+        grid-template-columns: 220px minmax(0, 1fr) 280px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .app-body {
+        grid-template-columns: 220px minmax(0, 1fr);
+      }
+
+      .ai-pane-right {
+        position: absolute;
+        right: 0;
+        top: 48px;
+        bottom: 0;
+        width: 280px;
+        z-index: 20;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .app-body {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .sidebar-left {
+        display: none;
+      }
+
+      .quick-grid-wrapper {
+        margin: 8px 12px 56px;
+      }
+
+      .editor-overlay {
+        border-radius: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-root">
+    <!-- HEADER -->
+    <header class="app-header">
+      <button class="header-circle" title="アカウント / アプリ設定"></button>
+      <div class="header-title">AteliNote · Quick Capture</div>
+      <button class="header-circle" title="AIパネルの開閉" data-role="ai-toggle"></button>
+    </header>
+
+    <!-- BODY -->
+    <div class="app-body">
+      <!-- LEFT: サイドバー -->
+      <aside class="sidebar-left">
+        <section class="sidebar-section" data-label="MAIN">
+          <div class="sidebar-section-title"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+        </section>
+
+        <section class="sidebar-section" data-label="PROJECT BOARD">
+          <div class="sidebar-section-title"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+        </section>
+
+        <section class="sidebar-section" data-label="QUICK CAPTURE">
+          <div class="sidebar-section-title"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+        </section>
+
+        <section class="sidebar-section" data-label="AI CONVERSATIONS">
+          <div class="sidebar-section-title"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+        </section>
+      </aside>
+
+      <!-- CENTER: Quick Capture メイン -->
+      <main class="quick-main">
+        <div class="quick-grid-wrapper">
+          <div class="quick-grid">
+            <!-- タイル群: 形と比率のみ、内容はダミー -->
+            <div class="quick-tile quick-tile--tall" data-role="open-editor"></div>
+            <div class="quick-tile quick-tile--medium"></div>
+            <div class="quick-tile quick-tile--tall">
+              <div class="quick-tile-play-icon"></div>
+            </div>
+            <div class="quick-tile quick-tile--medium"></div>
+            <div class="quick-tile quick-tile--tall">
+              <div class="quick-tile-doc-icon"></div>
+            </div>
+            <div class="quick-tile quick-tile--medium">
+              <div class="quick-tile-audio"></div>
+            </div>
+            <div class="quick-tile quick-tile--medium">
+              <div class="quick-tile-play-icon"></div>
+            </div>
+            <div class="quick-tile quick-tile--tall">
+              <div class="quick-tile-doc-icon"></div>
+              <div class="quick-tile-audio"></div>
+            </div>
+            <div class="quick-tile quick-tile--medium"></div>
+            <div class="quick-tile quick-tile--medium"></div>
+            <div class="quick-tile quick-tile--tall"></div>
+            <div class="quick-tile quick-tile--medium"></div>
+          </div>
+
+          <!-- Editor overlay: 2枚目のイメージ -->
+          <section class="editor-overlay" id="editorOverlay">
+            <header class="editor-header">
+              <div class="editor-doc-icon"></div>
+              <div class="editor-title-block">
+                <div class="editor-title-line"></div>
+                <div class="editor-subtitle-line"></div>
+              </div>
+              <button class="editor-close-btn" title="閉じる"></button>
+            </header>
+
+            <div class="editor-mode-toggle">
+              <div class="editor-mode-pill is-active">Plain</div>
+              <div class="editor-mode-pill">Markdown</div>
+            </div>
+
+            <div class="editor-body">
+              <div class="editor-textarea-mock">
+                <div class="editor-line"></div>
+                <div class="editor-line"></div>
+                <div class="editor-line"></div>
+                <div class="editor-line"></div>
+                <div class="editor-line" style="width: 40%;"></div>
+              </div>
+              <div class="editor-attachments">
+                <div class="attachment-pill"></div>
+                <div class="attachment-pill"></div>
+                <div class="attachment-wave"></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- 画面下部ツールバー -->
+        <div class="quick-toolbar">
+          <div class="quick-toolbar-row">
+            <div class="quick-toolbar-slot quick-toolbar-slot--active"></div>
+            <div class="quick-toolbar-slot"></div>
+            <div class="quick-toolbar-slot"></div>
+            <div class="quick-toolbar-slot"></div>
+            <div class="quick-toolbar-slot"></div>
+            <div class="quick-toolbar-slot"></div>
+            <div class="quick-toolbar-slot"></div>
+            <div class="quick-toolbar-slot"></div>
+          </div>
+          <div class="quick-toolbar-circle"></div>
+        </div>
+      </main>
+
+      <!-- RIGHT: AI エージェントとの対話パネル -->
+      <aside class="ai-pane-right" id="aiPane">
+        <div class="ai-header">
+          <div class="ai-status-dot"></div>
+        </div>
+
+        <div class="ai-message-list">
+          <div class="ai-message-item"></div>
+          <div class="ai-message-item"></div>
+          <div class="ai-message-item"></div>
+          <div class="ai-message-item"></div>
+          <div class="ai-message-item"></div>
+        </div>
+
+        <div class="ai-input-container">
+          <div class="ai-input-circle"></div>
+          <input
+            class="ai-input-field"
+            type="text"
+            placeholder="AIエージェントにメッセージを送信..."
+          />
+          <div class="ai-input-circle"></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // AIパネル開閉
+      var toggle = document.querySelector('[data-role="ai-toggle"]');
+      var aiPane = document.getElementById('aiPane');
+      if (toggle && aiPane) {
+        toggle.addEventListener('click', function () {
+          aiPane.classList.toggle('is-collapsed');
+        });
+      }
+
+      // タイルクリックでエディタオーバーレイ表示
+      var overlay = document.getElementById('editorOverlay');
+      var openTile = document.querySelector('[data-role="open-editor"]');
+      var closeBtn = overlay ? overlay.querySelector('.editor-close-btn') : null;
+
+      if (openTile && overlay) {
+        openTile.style.cursor = 'pointer';
+        openTile.addEventListener('click', function () {
+          overlay.classList.add('is-open');
+        });
+      }
+
+      if (closeBtn && overlay) {
+        closeBtn.addEventListener('click', function () {
+          overlay.classList.remove('is-open');
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>AteliNote – Project Board Mock</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --header-bg: #9c9c9c;
+      --bg-main: #ffffff;
+      --panel-light: #e2e2e2;
+      --panel-dark: #777777;
+      --panel-mid: #d4d4d4;
+      --border-subtle: #c6c6c6;
+      --text-main: #333333;
+      --text-sub: #666666;
+      --radius-lg: 18px;
+      --radius-md: 10px;
+      --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: #dddddd;
+      color: var(--text-main);
+      height: 100vh;
+    }
+
+    .app-root {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+
+    /* ===== HEADER ===== */
+    .app-header {
+      height: 48px;
+      background: var(--header-bg);
+      display: grid;
+      grid-template-columns: 48px 1fr 48px;
+      align-items: center;
+      padding: 0 12px;
+      column-gap: 12px;
+    }
+
+    .header-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: none;
+      background: #ffffff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-title {
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      color: #fdfdfd;
+      letter-spacing: 0.04em;
+    }
+
+    /* ===== 3カラムレイアウト ===== */
+    .app-body {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr) 320px;
+      height: calc(100vh - 48px);
+    }
+
+    /* ===== LEFT SIDEBAR (ナビ + リスト) ===== */
+    .sidebar-left {
+      background: var(--panel-light);
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      padding: 12px 10px;
+      gap: 10px;
+    }
+
+    .sidebar-section {
+      padding-bottom: 10px;
+      border-bottom: 1px solid #d0d0d0;
+    }
+
+    .sidebar-section:last-of-type {
+      border-bottom: none;
+    }
+
+    .sidebar-section[data-label]::before {
+      content: attr(data-label);
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-sub);
+      margin-bottom: 4px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .sidebar-section-title {
+      height: 18px;
+      border-radius: 6px;
+      background: var(--panel-dark);
+      opacity: 0.9;
+      margin-bottom: 6px;
+    }
+
+    .sidebar-item {
+      height: 24px;
+      border-radius: 6px;
+      background: var(--panel-dark);
+      opacity: 0.9;
+      margin-bottom: 4px;
+    }
+
+    /* ===== CENTER PROJECT BOARD ===== */
+    .board-main {
+      position: relative;
+      background: var(--bg-main);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .board-canvas {
+      position: relative;
+      flex: 1;
+      /* Quick Capture に合わせた余白 */
+      margin: 12px 12px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: inset 0 0 0 1px #e5e5e5;
+    }
+
+    /* 付箋メモ（note-list-item をボード上にピン留めしたイメージ） */
+    .note-card {
+      position: absolute;
+      width: 220px;
+      min-height: 90px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: #f3f3f3;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform 0.12s ease, box-shadow 0.12s ease,
+        border-color 0.12s ease;
+    }
+
+    .note-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.16);
+    }
+
+    .note-card.is-active {
+      border-color: #4a4a4a;
+    }
+
+    .note-card-header {
+      height: 14px;
+      border-radius: 6px;
+      background: #9b9b9b;
+      opacity: 0.95;
+    }
+
+    .note-card-line {
+      height: 8px;
+      border-radius: 4px;
+      background: #bdbdbd;
+      opacity: 0.9;
+    }
+
+    .note-pin {
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: #777777;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    }
+
+    /* ボトム中央のスロットバー + 丸（Quick Capture のツールバー準拠） */
+    .board-footer {
+      position: absolute;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .board-slot-row {
+      display: grid;
+      grid-auto-flow: column;
+      gap: 4px;
+      padding: 4px;
+      border-radius: 10px;
+      border: 2px solid #777777;
+      background: #f3f3f3;
+    }
+
+    .board-slot {
+      width: 26px;
+      height: 26px;
+      border-radius: 4px;
+      background: #b0b0b0;
+    }
+
+    .board-slot--active {
+      background: #777777;
+    }
+
+    .board-slot-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: #777777;
+    }
+
+    /* ===== RIGHT AI PANEL ===== */
+    .ai-pane-right {
+      background: var(--panel-light);
+      border-left: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      padding: 12px 12px 0;
+      position: relative;
+      transition: transform 0.18s ease, opacity 0.18s ease;
+    }
+
+    .ai-pane-right.is-collapsed {
+      transform: translateX(100%);
+      opacity: 0;
+      pointer-events: none;
+      border-left: none;
+    }
+
+    .ai-header {
+      position: relative;
+      height: 32px;
+      border-bottom: 1px solid #c0c0c0;
+      margin-bottom: 10px;
+    }
+
+    .ai-status-dot {
+      position: absolute;
+      right: 6px;
+      top: 8px;
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: var(--panel-dark);
+    }
+
+    .ai-message-list {
+      flex: 1;
+      padding: 6px 0 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .ai-message-item {
+      height: 26px;
+      border-radius: 6px;
+      background: var(--panel-dark);
+      opacity: 0.9;
+    }
+
+    .ai-input-container {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      height: 72px;
+      border-radius: 16px 16px 0 0;
+      background: var(--panel-dark);
+      display: grid;
+      grid-template-columns: 28px 1fr 28px;
+      align-items: center;
+      padding: 10px 14px;
+      column-gap: 10px;
+    }
+
+    .ai-input-circle {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: #ffffff;
+    }
+
+    .ai-input-field {
+      width: 100%;
+      height: 32px;
+      border-radius: 999px;
+      border: none;
+      padding: 0 10px;
+      font-size: 12px;
+      outline: none;
+    }
+
+    /* ===== RESPONSIVE（簡易） ===== */
+    @media (max-width: 1100px) {
+      .app-body {
+        grid-template-columns: 220px minmax(0, 1fr) 280px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .app-body {
+        grid-template-columns: 220px minmax(0, 1fr);
+      }
+      .ai-pane-right {
+        position: absolute;
+        right: 0;
+        top: 48px;
+        bottom: 0;
+        width: 280px;
+        z-index: 20;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .app-body {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .sidebar-left {
+        display: none;
+      }
+      .board-canvas {
+        margin: 10px 10px 56px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-root">
+    <!-- HEADER -->
+    <header class="app-header">
+      <button class="header-circle" title="アカウント / アプリ設定"></button>
+      <div class="header-title">AteliNote · Project Board</div>
+      <button class="header-circle" title="AIパネルの開閉" data-role="ai-toggle"></button>
+    </header>
+
+    <!-- BODY -->
+    <div class="app-body">
+      <!-- LEFT: サイドバー（LP / Project Board / Quick Capture / 設定 / AIログ など） -->
+      <aside class="sidebar-left">
+        <section class="sidebar-section" data-label="MAIN">
+          <div class="sidebar-section-title"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+        </section>
+
+        <section class="sidebar-section" data-label="PROJECT BOARD">
+          <div class="sidebar-section-title"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+        </section>
+
+        <section class="sidebar-section" data-label="QUICK CAPTURE">
+          <div class="sidebar-section-title"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+        </section>
+
+        <section class="sidebar-section" data-label="AI CONVERSATIONS">
+          <div class="sidebar-section-title"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+          <div class="sidebar-item"></div>
+        </section>
+      </aside>
+
+      <!-- CENTER: Project Board -->
+      <main class="board-main">
+        <section class="board-canvas">
+          <!-- note-list-item を付箋として自由配置するイメージ -->
+          <article
+            class="note-card note-list-item is-active"
+            style="top: 40px; left: 80px;"
+          >
+            <div class="note-pin"></div>
+            <div class="note-card-header"></div>
+            <div class="note-card-line"></div>
+            <div class="note-card-line"></div>
+            <div class="note-card-line" style="width: 70%;"></div>
+          </article>
+
+          <article
+            class="note-card note-list-item"
+            style="top: 160px; left: 320px;"
+          >
+            <div class="note-pin"></div>
+            <div class="note-card-header"></div>
+            <div class="note-card-line"></div>
+            <div class="note-card-line"></div>
+          </article>
+
+          <article
+            class="note-card note-list-item"
+            style="top: 260px; left: 160px;"
+          >
+            <div class="note-pin"></div>
+            <div class="note-card-header"></div>
+            <div class="note-card-line"></div>
+            <div class="note-card-line" style="width: 80%;"></div>
+          </article>
+        </section>
+
+        <!-- bottom center slot bar (toolbar) -->
+        <div class="board-footer">
+          <div class="board-slot-row">
+            <div class="board-slot board-slot--active"></div>
+            <div class="board-slot"></div>
+            <div class="board-slot"></div>
+            <div class="board-slot"></div>
+            <div class="board-slot"></div>
+            <div class="board-slot"></div>
+            <div class="board-slot"></div>
+            <div class="board-slot"></div>
+          </div>
+          <div class="board-slot-circle"></div>
+        </div>
+      </main>
+
+      <!-- RIGHT: AIエージェントとの対話パネル -->
+      <aside class="ai-pane-right" id="aiPane">
+        <div class="ai-header">
+          <div class="ai-status-dot"></div>
+        </div>
+
+        <div class="ai-message-list">
+          <div class="ai-message-item"></div>
+          <div class="ai-message-item"></div>
+          <div class="ai-message-item"></div>
+          <div class="ai-message-item"></div>
+          <div class="ai-message-item"></div>
+        </div>
+
+        <div class="ai-input-container">
+          <div class="ai-input-circle"></div>
+          <input
+            class="ai-input-field"
+            type="text"
+            placeholder="AIエージェントにメッセージを送信..."
+          />
+          <div class="ai-input-circle"></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    // 右上の白丸で AI パネルの開閉をトグルする簡易モック
+    (function () {
+      var toggle = document.querySelector('[data-role="ai-toggle"]');
+      var aiPane = document.getElementById('aiPane');
+      if (!toggle || !aiPane) return;
+
+      toggle.addEventListener('click', function () {
+        aiPane.classList.toggle('is-collapsed');
+      });
+
+      // note-card をクリックしたときにアクティブ枠だけ切り替える簡易処理
+      var cards = document.querySelectorAll('.note-card');
+      cards.forEach(function (card) {
+        card.addEventListener('click', function () {
+          cards.forEach(function (c) {
+            c.classList.remove('is-active');
+          });
+          card.classList.add('is-active');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

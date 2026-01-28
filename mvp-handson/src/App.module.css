@@ -1,0 +1,43 @@
+:root {
+  --border-radius-s: 8px;
+  --text-color: #333333;
+  color: var(--text-color);
+}
+
+.container {
+  display: flex;
+  flex-direction: column; /* 縦並び (メインエリア + ナビゲーション) */
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.mainArea {
+  flex: 1; /* 残りの高さを埋める */
+  display: flex; /* 横並び (タスク + メモ) */
+  overflow: hidden; /* 中身だけスクロールさせるため */
+}
+
+/* 左カラム: タスク */
+.colTask {
+  width: 300px;
+  min-width: 250px;
+  border-right: 1px solid #ddd;
+  /* タスク自体はスクロールするかもしれないので */
+  display: flex;
+  flex-direction: column;
+}
+
+/* 右エリア: メモ (以前の中央カラム) */
+/* 今回は「右カラム」が消滅し、メモがメインになります */
+.colNote {
+  flex: 1; /* 残りの幅を全部使う */
+  display: flex;
+  flex-direction: column;
+}
+
+/* 下部ナビゲーションエリア */
+.footer {
+  /* 高さは NavigationBar 側の padding 等で決定 */
+  border-top: 1px solid #ddd;
+}

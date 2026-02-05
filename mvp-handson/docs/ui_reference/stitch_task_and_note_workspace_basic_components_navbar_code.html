@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Navigation Bar Components &amp; States</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#28728a",
+                        "accent": "#E67A29",
+                        "background-light": "#fafafa",
+                        "background-dark": "#17191c",
+                        "card-light": "#ffffff",
+                        "card-dark": "#23262b",
+                        "text-main": "#121617",
+                        "text-secondary": "#687c82",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'float': '0 8px 24px rgba(0, 0, 0, 0.08)',
+                        'float-hover': '0 12px 32px rgba(0, 0, 0, 0.12)',
+                        'menu': '0 4px 20px rgba(0, 0, 0, 0.1)',
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main font-display min-h-screen py-20 px-4 md:px-10 flex flex-col items-center">
+<div class="w-full max-w-4xl space-y-[200px]">
+<div class="text-center mb-12 !mb-0">
+<h1 class="text-2xl font-bold dark:text-white mb-2">Navigation Bar Components</h1>
+<p class="text-text-secondary">State transitions and variations for the floating task bar.</p>
+</div>
+<div class="relative w-full">
+<div class="absolute -top-10 left-0 text-xs font-bold text-text-secondary uppercase tracking-widest opacity-60">
+                01. Base Note Creation
+            </div>
+<div class="bg-white dark:bg-card-dark rounded-[50px] shadow-float p-2 flex items-center gap-3 border border-gray-100 dark:border-gray-700 h-[68px] w-full transition-shadow hover:shadow-float-hover">
+<button class="size-11 flex items-center justify-center rounded-full text-text-secondary hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ml-1">
+<span class="material-symbols-outlined text-[24px]">attach_file</span>
+</button>
+<div class="flex-1 flex items-center h-full">
+<input class="w-full bg-transparent border-none p-2 text-base text-text-main dark:text-white placeholder-gray-400 focus:ring-0" placeholder="Type a quick note..." type="text"/>
+</div>
+<div class="bg-gray-100 dark:bg-gray-800 rounded-full p-1 flex items-center mr-1">
+<button class="size-9 rounded-full bg-white dark:bg-card-dark shadow-sm flex items-center justify-center text-primary transition-all">
+<span class="material-symbols-outlined text-[20px]">grid_view</span>
+</button>
+<button class="size-9 rounded-full flex items-center justify-center text-text-secondary hover:text-text-main transition-all">
+<span class="material-symbols-outlined text-[20px]">view_list</span>
+</button>
+</div>
+</div>
+</div>
+<div class="relative w-full">
+<div class="absolute -top-10 left-0 text-xs font-bold text-text-secondary uppercase tracking-widest opacity-60">
+                02. Task Creation (Single)
+            </div>
+<div class="bg-white dark:bg-card-dark rounded-[50px] shadow-float p-2 pl-3 flex items-center gap-3 border border-gray-100 dark:border-gray-700 h-[68px] w-full transition-shadow hover:shadow-float-hover">
+<button class="h-11 pl-4 pr-3 flex items-center gap-2 bg-[#FFF3EB] text-[#E67A29] dark:bg-[#E67A29]/20 hover:opacity-90 rounded-[50px] transition-colors font-semibold text-sm whitespace-nowrap">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span>Single Task</span>
+<span class="material-symbols-outlined text-[18px] opacity-70">expand_more</span>
+</button>
+<div class="flex-1 flex items-center h-full">
+<input class="w-full bg-transparent border-none p-2 text-base text-text-main dark:text-white placeholder-gray-400 focus:ring-0" placeholder="Task name..." type="text"/>
+</div>
+<div class="flex items-center gap-2 pr-1">
+<button class="flex items-center gap-1.5 text-text-secondary hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 transition-all text-sm font-medium px-4 py-2.5 rounded-full">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+<span>Sep 24</span>
+</button>
+<div class="w-[1px] h-6 bg-gray-200 dark:bg-gray-700 mx-1"></div>
+<button class="size-10 flex items-center justify-center rounded-full text-text-secondary hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20 transition-colors">
+<span class="material-symbols-outlined text-[24px]">close</span>
+</button>
+<button class="size-12 flex items-center justify-center rounded-full bg-primary text-white shadow-md hover:opacity-90 hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[24px] font-bold">arrow_upward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="relative w-full">
+<div class="absolute -top-10 left-0 text-xs font-bold text-text-secondary uppercase tracking-widest opacity-60">
+                03. Task Creation (Cycle)
+            </div>
+<div class="bg-white dark:bg-card-dark rounded-[50px] shadow-float p-2 pl-3 flex items-center gap-3 border border-gray-100 dark:border-gray-700 h-[68px] w-full transition-shadow hover:shadow-float-hover">
+<button class="h-11 pl-4 pr-3 flex items-center gap-2 bg-[#FFF3EB] text-[#E67A29] dark:bg-[#E67A29]/20 hover:opacity-90 rounded-[50px] transition-colors font-semibold text-sm whitespace-nowrap">
+<span class="material-symbols-outlined text-[20px]">loop</span>
+<span>Cycle Task</span>
+<span class="material-symbols-outlined text-[18px] opacity-70">expand_more</span>
+</button>
+<div class="flex-1 flex items-center h-full">
+<input class="w-full bg-transparent border-none p-2 text-base text-text-main dark:text-white placeholder-gray-400 focus:ring-0" placeholder="Cycle name..." type="text"/>
+</div>
+<div class="flex items-center gap-1 pr-1">
+<button class="flex items-center gap-1.5 text-text-secondary hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 transition-all text-sm font-medium px-4 py-2.5 rounded-full">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+<span class="hidden sm:inline">Sep 24</span>
+</button>
+<button class="flex items-center gap-1.5 text-text-secondary hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 transition-all text-sm font-medium px-4 py-2.5 rounded-full">
+<span class="material-symbols-outlined text-[20px]">repeat</span>
+<span class="hidden sm:inline">Weekly</span>
+</button>
+<div class="w-[1px] h-6 bg-gray-200 dark:bg-gray-700 mx-1"></div>
+<button class="size-10 flex items-center justify-center rounded-full text-text-secondary hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20 transition-colors">
+<span class="material-symbols-outlined text-[24px]">close</span>
+</button>
+<button class="size-12 flex items-center justify-center rounded-full bg-primary text-white shadow-md hover:opacity-90 hover:scale-105 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[24px] font-bold">arrow_upward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="relative w-full z-30">
+<div class="absolute -top-10 left-0 text-xs font-bold text-text-secondary uppercase tracking-widest opacity-60">
+                04. Active Selection: Calendar
+            </div>
+<div class="absolute bottom-[calc(100%+12px)] right-[170px] w-72 bg-white dark:bg-card-dark rounded-2xl shadow-menu border border-gray-100 dark:border-gray-700 p-4 z-40 origin-bottom-right">
+<div class="flex justify-between items-center mb-4">
+<button class="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full text-text-secondary">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<span class="font-bold text-sm dark:text-white">September 2024</span>
+<button class="p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full text-text-secondary">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+<div class="grid grid-cols-7 gap-1 text-center mb-2">
+<span class="text-[10px] font-bold text-text-secondary uppercase">S</span>
+<span class="text-[10px] font-bold text-text-secondary uppercase">M</span>
+<span class="text-[10px] font-bold text-text-secondary uppercase">T</span>
+<span class="text-[10px] font-bold text-text-secondary uppercase">W</span>
+<span class="text-[10px] font-bold text-text-secondary uppercase">T</span>
+<span class="text-[10px] font-bold text-text-secondary uppercase">F</span>
+<span class="text-[10px] font-bold text-text-secondary uppercase">S</span>
+</div>
+<div class="grid grid-cols-7 gap-1 text-center">
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">1</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">2</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">3</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">4</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">5</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">6</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">7</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">8</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">9</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">10</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">11</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">12</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">13</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">14</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">15</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">16</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">17</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">18</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">19</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">20</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">21</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">22</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">23</button>
+<button class="size-8 text-xs font-bold text-white bg-primary rounded-full shadow-sm">24</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">25</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">26</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">27</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">28</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">29</button>
+<button class="size-8 text-xs text-text-secondary hover:bg-gray-50 rounded-full">30</button>
+<button class="size-8 text-xs text-gray-300 pointer-events-none">1</button>
+<button class="size-8 text-xs text-gray-300 pointer-events-none">2</button>
+<button class="size-8 text-xs text-gray-300 pointer-events-none">3</button>
+<button class="size-8 text-xs text-gray-300 pointer-events-none">4</button>
+<button class="size-8 text-xs text-gray-300 pointer-events-none">5</button>
+</div>
+</div>
+<div class="bg-white dark:bg-card-dark rounded-[50px] shadow-float p-2 pl-3 flex items-center gap-3 border border-gray-100 dark:border-gray-700 h-[68px] w-full">
+<button class="h-11 pl-4 pr-3 flex items-center gap-2 bg-[#FFF3EB] text-[#E67A29] dark:bg-[#E67A29]/20 hover:opacity-90 rounded-[50px] transition-colors font-semibold text-sm whitespace-nowrap">
+<span class="material-symbols-outlined text-[20px]">loop</span>
+<span>Cycle Task</span>
+<span class="material-symbols-outlined text-[18px] opacity-70">expand_more</span>
+</button>
+<div class="flex-1 flex items-center h-full">
+<input class="w-full bg-transparent border-none p-2 text-base text-text-main dark:text-white placeholder-gray-400 focus:ring-0" placeholder="Cycle name..." type="text" value="Quarterly Review"/>
+</div>
+<div class="flex items-center gap-1 pr-1">
+<button class="flex items-center gap-1.5 bg-primary text-white px-4 py-2.5 rounded-full transition-all text-sm font-bold shadow-sm ring-4 ring-primary/10">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+<span class="hidden sm:inline">Sep 24</span>
+<span class="material-symbols-outlined text-[18px]">expand_less</span>
+</button>
+<button class="flex items-center gap-1.5 text-text-secondary hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 transition-all text-sm font-medium px-4 py-2.5 rounded-full">
+<span class="material-symbols-outlined text-[20px]">repeat</span>
+<span class="hidden sm:inline">Weekly</span>
+</button>
+<div class="w-[1px] h-6 bg-gray-200 dark:bg-gray-700 mx-1"></div>
+<button class="size-10 flex items-center justify-center rounded-full text-text-secondary hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20 transition-colors">
+<span class="material-symbols-outlined text-[24px]">close</span>
+</button>
+<button class="size-12 flex items-center justify-center rounded-full bg-primary text-white shadow-md hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-[24px] font-bold">arrow_upward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="relative w-full z-20">
+<div class="absolute -top-10 left-0 text-xs font-bold text-text-secondary uppercase tracking-widest opacity-60">
+                05. Active Selection: Recurrence
+            </div>
+<div class="absolute bottom-[calc(100%+12px)] right-[80px] w-56 bg-white dark:bg-card-dark rounded-2xl shadow-menu border border-gray-100 dark:border-gray-700 flex flex-col overflow-hidden z-40 py-1">
+<button class="w-full text-left px-4 py-2.5 text-sm text-text-main dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center gap-2 transition-colors">
+<span>Daily</span>
+</button>
+<button class="w-full text-left px-4 py-2.5 text-sm text-primary font-bold bg-primary/5 hover:bg-primary/10 flex items-center justify-between transition-colors">
+<span>Weekly</span>
+<span class="material-symbols-outlined text-[18px]">check</span>
+</button>
+<button class="w-full text-left px-4 py-2.5 text-sm text-text-main dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center gap-2 transition-colors">
+<span>Monthly</span>
+</button>
+<button class="w-full text-left px-4 py-2.5 text-sm text-text-main dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center gap-2 transition-colors">
+<span>Yearly</span>
+</button>
+<div class="h-[1px] bg-gray-100 dark:bg-gray-700 my-1"></div>
+<button class="w-full text-left px-4 py-2.5 text-sm text-text-secondary hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                    Custom Recurrence...
+                </button>
+</div>
+<div class="bg-white dark:bg-card-dark rounded-[50px] shadow-float p-2 pl-3 flex items-center gap-3 border border-gray-100 dark:border-gray-700 h-[68px] w-full">
+<button class="h-11 pl-4 pr-3 flex items-center gap-2 bg-[#FFF3EB] text-[#E67A29] dark:bg-[#E67A29]/20 hover:opacity-90 rounded-[50px] transition-colors font-semibold text-sm whitespace-nowrap">
+<span class="material-symbols-outlined text-[20px]">loop</span>
+<span>Cycle Task</span>
+<span class="material-symbols-outlined text-[18px] opacity-70">expand_more</span>
+</button>
+<div class="flex-1 flex items-center h-full">
+<input class="w-full bg-transparent border-none p-2 text-base text-text-main dark:text-white placeholder-gray-400 focus:ring-0" placeholder="Cycle name..." type="text" value="Weekly Sync"/>
+</div>
+<div class="flex items-center gap-1 pr-1">
+<button class="flex items-center gap-1.5 text-text-secondary hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 transition-all text-sm font-medium px-4 py-2.5 rounded-full">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+<span class="hidden sm:inline">Sep 24</span>
+</button>
+<button class="flex items-center gap-1.5 bg-primary text-white px-4 py-2.5 rounded-full transition-all text-sm font-bold shadow-sm ring-4 ring-primary/10">
+<span class="material-symbols-outlined text-[20px]">repeat</span>
+<span class="hidden sm:inline">Weekly</span>
+<span class="material-symbols-outlined text-[18px]">expand_less</span>
+</button>
+<div class="w-[1px] h-6 bg-gray-200 dark:bg-gray-700 mx-1"></div>
+<button class="size-10 flex items-center justify-center rounded-full text-text-secondary hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20 transition-colors">
+<span class="material-symbols-outlined text-[24px]">close</span>
+</button>
+<button class="size-12 flex items-center justify-center rounded-full bg-primary text-white shadow-md hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-[24px] font-bold">arrow_upward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="relative w-full z-10">
+<div class="absolute -top-10 left-0 text-xs font-bold text-text-secondary uppercase tracking-widest opacity-60">
+                06. Active Selection: Task Type
+            </div>
+<div class="absolute bottom-[calc(100%+12px)] left-0 w-48 bg-white dark:bg-card-dark rounded-2xl shadow-menu border border-gray-100 dark:border-gray-700 flex flex-col overflow-hidden z-40 py-1">
+<button class="w-full text-left px-4 py-3 text-sm text-text-main dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center gap-3 transition-colors group">
+<span class="material-symbols-outlined text-[20px] text-gray-400 group-hover:text-[#E67A29]">check_circle</span>
+<span>Single Task</span>
+</button>
+<button class="w-full text-left px-4 py-3 text-sm bg-[#FFF3EB] dark:bg-[#E67A29]/10 text-[#E67A29] font-bold flex items-center justify-between transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px]">loop</span>
+<span>Cycle Task</span>
+</div>
+<span class="material-symbols-outlined text-[18px]">check</span>
+</button>
+</div>
+<div class="bg-white dark:bg-card-dark rounded-[50px] shadow-float p-2 pl-3 flex items-center gap-3 border border-gray-100 dark:border-gray-700 h-[68px] w-full">
+<button class="h-11 pl-4 pr-3 flex items-center gap-2 bg-[#FFF3EB] text-[#E67A29] dark:bg-[#E67A29]/20 shadow-inner rounded-[50px] transition-colors font-semibold text-sm whitespace-nowrap">
+<span class="material-symbols-outlined text-[20px]">loop</span>
+<span>Cycle Task</span>
+<span class="material-symbols-outlined text-[18px]">expand_less</span>
+</button>
+<div class="flex-1 flex items-center h-full">
+<input class="w-full bg-transparent border-none p-2 text-base text-text-main dark:text-white placeholder-gray-400 focus:ring-0" placeholder="Cycle name..." type="text"/>
+</div>
+<div class="flex items-center gap-1 pr-1">
+<button class="flex items-center gap-1.5 text-text-secondary hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 transition-all text-sm font-medium px-4 py-2.5 rounded-full">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+<span class="hidden sm:inline">Sep 24</span>
+</button>
+<button class="flex items-center gap-1.5 text-text-secondary hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 transition-all text-sm font-medium px-4 py-2.5 rounded-full">
+<span class="material-symbols-outlined text-[20px]">repeat</span>
+<span class="hidden sm:inline">Weekly</span>
+</button>
+<div class="w-[1px] h-6 bg-gray-200 dark:bg-gray-700 mx-1"></div>
+<button class="size-10 flex items-center justify-center rounded-full text-text-secondary hover:bg-red-50 hover:text-red-500 dark:hover:bg-red-900/20 transition-colors">
+<span class="material-symbols-outlined text-[24px]">close</span>
+</button>
+<button class="size-12 flex items-center justify-center rounded-full bg-primary text-white shadow-md hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-[24px] font-bold">arrow_upward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

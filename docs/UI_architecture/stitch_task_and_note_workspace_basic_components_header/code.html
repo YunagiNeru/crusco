@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Productivity App Header Component</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#28728a",
+                        "accent": "#E67A29",
+                        "background-light": "#fafafa",
+                        "background-dark": "#17191c",
+                        "card-light": "#ffffff",
+                        "card-dark": "#23262b",
+                        "text-main": "#121617",
+                        "text-secondary": "#687c82",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'tile': '0 4px 10px rgba(0, 0, 0, 0.08)',
+                        'float': '0 8px 24px rgba(0, 0, 0, 0.12)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-auto-rows: minmax(100px, auto);
+            gap: 16px;
+        }
+        .masonry-item-tall {
+            grid-row: span 2;
+        }
+        .masonry-item-wide {
+            grid-column: span 2;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #dde2e4;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #cbd2d6;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main font-display h-screen flex flex-col overflow-hidden transition-colors duration-200">
+<header class="h-16 flex items-center justify-between px-6 border-b border-[#f1f3f4] dark:border-gray-800 bg-white dark:bg-card-dark shrink-0 z-20 w-full">
+<div class="flex items-center gap-3">
+<div class="size-8 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">grid_view</span>
+</div>
+<h1 class="text-lg font-bold tracking-tight dark:text-white">Workspace</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">search</span>
+</button>
+<div class="h-8 w-[1px] bg-[#f1f3f4] dark:bg-gray-700"></div>
+<div class="size-9 rounded-full bg-cover bg-center ring-2 ring-white dark:ring-gray-700 shadow-sm" data-alt="User profile avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDw_dlWTnK1rSkiFqKZ9vnV6Dt-KuU34dNNEQG0wOVmPQqbUMO7OP1UMYPhO2lu_gfxgdd7wH17gwArK3yisO1t-YGY072MDJ_RZYWR5_pUhZ3Y4CosQhMK5qAmlt8mlHnASxvT2xUIjIjt3JhnXRNAMOl3oHW47iKxPR7x_Iw4qBWYYkrKUn19cHFvlyYltida1_cVTA55orSufH8YeqNJG877B7KK1JO075ofnYUk5wde7qcxGQZ5y9q9DIPGi5_KjCU8Ip723ZA');"></div>
+</div>
+</header>
+</body></html>

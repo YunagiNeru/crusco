@@ -1,10 +1,10 @@
-ファイル名: atelinote_requirements_v1.md
+ファイル名: Crusco_requirements_v1.md
 
-# AteliNote 要件定義書（MVP）v1.0
+# Crusco 要件定義書（MVP）v1.0
 
 ## 1. 概要
 
-- 名称: AteliNote（アトリノート）
+- 名称: Crusco（クルスコ）
 - コンセプト: クリエイター向けの「メモ・タスク・アイデア」を一元管理し、AI エージェントと連携して創作プロジェクトを支援するアプリケーション。
 - 対象ユーザー:
 
@@ -212,7 +212,7 @@ UI については `docs/UI_architecture` 配下の Figma デザインおよび 
 
 #### 4.4.1 概要
 
-- 右カラムのチャット UI で、AteliNote 専用の AI エージェントと対話。
+- 右カラムのチャット UI で、Crusco 専用の AI エージェントと対話。
 - MVP での必須機能:
 
   - アイデア壁打ち（機能名・プロンプト設計は後述要検討）

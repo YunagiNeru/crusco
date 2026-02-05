@@ -2,11 +2,11 @@
 
 ## 前提
 
-1. この要望書は、`C:\work\AteliNote\mvp-handson\implement_prompt.md` の `5.1 メモ機能（Phase 1 コア）` の実装完了を踏まえて、次のフェーズに進む前に、以下の修正を加えて、わたしの要望に沿ったメモ機能を完成させるための具体的な要望をまとめたものです。
+1. この要望書は、`C:\work\Crusco\mvp-handson\implement_prompt.md` の `5.1 メモ機能（Phase 1 コア）` の実装完了を踏まえて、次のフェーズに進む前に、以下の修正を加えて、わたしの要望に沿ったメモ機能を完成させるための具体的な要望をまとめたものです。
 
 2. 今回の修正によって後の工程において実装内容、機能に乖離が生じた場合は、勝手に判断・実装をせず、かならずわたしに確認を求めること。
 
-3. この機能修正においても、`C:\work\AteliNote\mvp-handson\implement_prompt.md` および `C:\work\AteliNote\mvp-handson\docs\requirements\hands-on-mvp.md`での指示・要望・あなたの教師役という立ち回りを厳守すること
+3. この機能修正においても、`C:\work\Crusco\mvp-handson\implement_prompt.md` および `C:\work\Crusco\mvp-handson\docs\requirements\hands-on-mvp.md`での指示・要望・あなたの教師役という立ち回りを厳守すること
 
 ## 要望
 
@@ -46,11 +46,11 @@
 
 ## 前提
 
-1. この要望書は、`C:\work\AteliNote\mvp-handson\implement_prompt.md` の `5.1 メモ機能（Phase 1 コア）` の実装完了を踏まえて、次のフェーズに進む前に、以下の修正を加えて、わたしの要望に沿ったメモ機能を完成させるための具体的な要望をまとめたものです。
+1. この要望書は、`C:\work\Crusco\mvp-handson\implement_prompt.md` の `5.1 メモ機能（Phase 1 コア）` の実装完了を踏まえて、次のフェーズに進む前に、以下の修正を加えて、わたしの要望に沿ったメモ機能を完成させるための具体的な要望をまとめたものです。
 
 2. 今回の修正によって後の工程において実装内容、機能に乖離が生じた場合は、勝手に判断・実装をせず、かならずわたしに確認を求めること。
 
-3. この機能修正においても、`C:\work\AteliNote\mvp-handson\implement_prompt.md` および `C:\work\AteliNote\mvp-handson\docs\requirements\hands-on-mvp.md`での指示・要望・あなたの教師役という立ち回りを厳守すること
+3. この機能修正においても、`C:\work\Crusco\mvp-handson\implement_prompt.md` および `C:\work\Crusco\mvp-handson\docs\requirements\hands-on-mvp.md`での指示・要望・あなたの教師役という立ち回りを厳守すること
 
 ## 要望
 

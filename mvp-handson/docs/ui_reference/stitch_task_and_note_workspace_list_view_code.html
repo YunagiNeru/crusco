@@ -1,0 +1,359 @@
+<html class="light" lang="en"><head></head><body class="bg-background-light dark:bg-background-dark text-text-main font-display h-screen flex flex-col overflow-hidden transition-colors duration-200">```html
+
+
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Task and Note Workspace - Dynamic List View</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#28728a",
+                        "accent": "#E67A29",
+                        "background-light": "#fafafa",
+                        "background-dark": "#17191c",
+                        "card-light": "#ffffff",
+                        "card-dark": "#23262b",
+                        "text-main": "#121617",
+                        "text-secondary": "#687c82",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    boxShadow: {
+                        'tile': '0 4px 10px rgba(0, 0, 0, 0.08)',
+                        'float': '0 8px 24px rgba(0, 0, 0, 0.12)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #dde2e4;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #cbd2d6;
+        }
+    </style>
+
+
+<header class="h-16 flex items-center justify-between px-6 border-b border-[#f1f3f4] dark:border-gray-800 bg-white dark:bg-card-dark shrink-0 z-20">
+<div class="flex items-center gap-3">
+<div class="size-8 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">grid_view</span>
+</div>
+<h1 class="text-lg font-bold tracking-tight dark:text-white">Workspace</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined">search</span>
+</button>
+<div class="h-8 w-[1px] bg-[#f1f3f4] dark:bg-gray-700"></div>
+<div class="size-9 rounded-full bg-cover bg-center ring-2 ring-white dark:ring-gray-700 shadow-sm" data-alt="User profile avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDw_dlWTnK1rSkiFqKZ9vnV6Dt-KuU34dNNEQG0wOVmPQqbUMO7OP1UMYPhO2lu_gfxgdd7wH17gwArK3yisO1t-YGY072MDJ_RZYWR5_pUhZ3Y4CosQhMK5qAmlt8mlHnASxvT2xUIjIjt3JhnXRNAMOl3oHW47iKxPR7x_Iw4qBWYYkrKUn19cHFvlyYltida1_cVTA55orSufH8YeqNJG877B7KK1JO075ofnYUk5wde7qcxGQZ5y9q9DIPGi5_KjCU8Ip723ZA');"></div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden relative">
+<aside class="w-80 bg-white dark:bg-[#1c1f24] border-r border-[#f1f3f4] dark:border-gray-800 flex flex-col shrink-0 z-10 shadow-[rgba(0,0,0,0.05)_0px_0px_20px]">
+<div class="p-6 border-b border-[#f1f3f4] dark:border-gray-800 flex justify-between items-center">
+<h2 class="text-lg font-bold dark:text-white">Tasks</h2>
+<button class="size-8 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-primary transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-6">
+<div>
+<h3 class="text-xs font-bold text-text-secondary uppercase tracking-wider mb-3 px-2">Cycle</h3>
+<div class="space-y-1">
+<label class="flex items-start gap-3 p-2 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg cursor-pointer transition-colors group">
+<div class="relative pt-0.5">
+<input class="peer h-5 w-5 rounded border-2 border-gray-300 dark:border-gray-600 text-primary focus:ring-0 focus:ring-offset-0 transition-all checked:border-primary" type="checkbox"/>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium text-text-main dark:text-gray-200 peer-checked:line-through peer-checked:text-gray-400">Weekly Team Sync</p>
+<div class="flex items-center gap-1 mt-1 text-text-secondary">
+<span class="material-symbols-outlined text-[14px]">event_repeat</span>
+<span class="text-xs">Every Monday</span>
+</div>
+</div>
+</label>
+<label class="flex items-start gap-3 p-2 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg cursor-pointer transition-colors group">
+<div class="relative pt-0.5">
+<input checked="" class="peer h-5 w-5 rounded border-2 border-gray-300 dark:border-gray-600 text-primary focus:ring-0 focus:ring-offset-0 transition-all checked:border-primary checked:bg-primary" type="checkbox"/>
+</div>
+<div class="flex-1 opacity-50">
+<p class="text-sm font-medium text-text-main dark:text-gray-200 line-through">Monthly Invoice</p>
+<div class="flex items-center gap-1 mt-1 text-text-secondary">
+<span class="material-symbols-outlined text-[14px]">event_repeat</span>
+<span class="text-xs">Every 1st</span>
+</div>
+</div>
+</label>
+</div>
+</div>
+<div>
+<h3 class="text-xs font-bold text-text-secondary uppercase tracking-wider mb-3 px-2">Today</h3>
+<div class="space-y-1">
+<label class="flex items-start gap-3 p-2 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg cursor-pointer transition-colors group">
+<div class="relative pt-0.5">
+<input class="peer h-5 w-5 rounded border-2 border-gray-300 dark:border-gray-600 text-primary focus:ring-0 focus:ring-offset-0 transition-all checked:border-primary" type="checkbox"/>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium text-text-main dark:text-gray-200 peer-checked:line-through peer-checked:text-gray-400">Review Q3 Budget</p>
+<span class="text-[10px] text-red-500 font-medium mt-1 inline-block">High Priority</span>
+</div>
+</label>
+<label class="flex items-start gap-3 p-2 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg cursor-pointer transition-colors group">
+<div class="relative pt-0.5">
+<input checked="" class="peer h-5 w-5 rounded border-2 border-gray-300 dark:border-gray-600 text-primary focus:ring-0 focus:ring-offset-0 transition-all checked:border-primary checked:bg-primary" type="checkbox"/>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium text-text-main dark:text-gray-200 peer-checked:line-through peer-checked:text-gray-400 dark:peer-checked:text-gray-500">Email Client regarding specs</p>
+</div>
+</label>
+</div>
+</div>
+<div>
+<h3 class="text-xs font-bold text-text-secondary uppercase tracking-wider mb-3 px-2">Upcoming</h3>
+<div class="space-y-1">
+<label class="flex items-start gap-3 p-2 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg cursor-pointer transition-colors group">
+<div class="relative pt-0.5">
+<input class="peer h-5 w-5 rounded border-2 border-gray-300 dark:border-gray-600 text-primary focus:ring-0 focus:ring-offset-0 transition-all checked:border-primary" type="checkbox"/>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium text-text-main dark:text-gray-200 peer-checked:line-through peer-checked:text-gray-400">Update Software Licenses</p>
+<p class="text-xs text-text-secondary mt-0.5">Due tomorrow</p>
+</div>
+</label>
+<label class="flex items-start gap-3 p-2 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg cursor-pointer transition-colors group">
+<div class="relative pt-0.5">
+<input class="peer h-5 w-5 rounded border-2 border-gray-300 dark:border-gray-600 text-primary focus:ring-0 focus:ring-offset-0 transition-all checked:border-primary" type="checkbox"/>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium text-text-main dark:text-gray-200 peer-checked:line-through peer-checked:text-gray-400">Plan Team Retreat</p>
+</div>
+</label>
+<label class="flex items-start gap-3 p-2 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg cursor-pointer transition-colors group">
+<div class="relative pt-0.5">
+<input class="peer h-5 w-5 rounded border-2 border-gray-300 dark:border-gray-600 text-primary focus:ring-0 focus:ring-offset-0 transition-all checked:border-primary" type="checkbox"/>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium text-text-main dark:text-gray-200 peer-checked:line-through peer-checked:text-gray-400">Design System Audit</p>
+<div class="flex gap-1 mt-1">
+<span class="size-2 rounded-full bg-purple-400"></span>
+<span class="text-xs text-text-secondary">Design Team</span>
+</div>
+</div>
+</label>
+</div>
+</div>
+<div>
+<h3 class="text-xs font-bold text-text-secondary uppercase tracking-wider mb-3 px-2">Complete</h3>
+<div class="space-y-1">
+<label class="flex items-start gap-3 p-2 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg cursor-pointer transition-colors group">
+<div class="relative pt-0.5">
+<input checked="" class="peer h-5 w-5 rounded border-2 border-gray-300 dark:border-gray-600 text-primary focus:ring-0 focus:ring-offset-0 transition-all checked:border-primary checked:bg-primary" type="checkbox"/>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium text-gray-400 line-through dark:text-gray-500">Pick up laundry</p>
+</div>
+</label>
+<label class="flex items-start gap-3 p-2 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg cursor-pointer transition-colors group">
+<div class="relative pt-0.5">
+<input checked="" class="peer h-5 w-5 rounded border-2 border-gray-300 dark:border-gray-600 text-primary focus:ring-0 focus:ring-offset-0 transition-all checked:border-primary checked:bg-primary" type="checkbox"/>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium text-gray-400 line-through dark:text-gray-500">Submit expense report</p>
+</div>
+</label>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-[#f1f3f4] dark:border-gray-800 bg-gray-50 dark:bg-[#1e2124]/50">
+<div class="w-full bg-gray-200 dark:bg-gray-700 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[35%] rounded-full"></div>
+</div>
+<div class="flex justify-between mt-2 text-xs text-text-secondary font-medium">
+<span>3/8 Completed</span>
+<span>35%</span>
+</div>
+</div>
+</aside>
+<main class="flex-1 relative bg-background-light dark:bg-background-dark overflow-y-auto overflow-x-hidden p-6 pb-28">
+<div class="max-w-[800px] mx-auto">
+<div class="flex justify-between items-end mb-6">
+<div>
+<h2 class="text-2xl font-bold dark:text-white">My Notes</h2>
+<p class="text-text-secondary text-sm">Last synced just now</p>
+</div>
+<div class="flex items-center gap-2 text-sm text-text-secondary">
+<span class="material-symbols-outlined text-[18px]">cloud_done</span>
+<span>Saved</span>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<div class="group relative bg-white dark:bg-card-dark rounded-xl shadow-tile p-5 border-2 border-primary ring-4 ring-primary/5 transition-all duration-200 flex items-start gap-4">
+<div class="pt-1 cursor-grab text-gray-300 hover:text-primary active:cursor-grabbing shrink-0">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</div>
+<div class="absolute top-3 right-3 flex gap-2">
+<button class="p-1.5 rounded-md text-text-secondary hover:text-primary hover:bg-primary/5 transition-colors" title="Pin Note">
+<span class="material-symbols-outlined text-[18px]">push_pin</span>
+</button>
+</div>
+<div class="flex-1 flex flex-col">
+<input class="text-xl font-bold text-text-main dark:text-white bg-transparent border-none p-0 focus:ring-0 placeholder-gray-400 w-full mb-2" type="text" value="Project Alpha Specs"/>
+<textarea class="resize-none w-full h-32 bg-transparent border-none p-0 focus:ring-0 text-text-secondary text-base leading-relaxed" placeholder="Start typing...">Define requirements for the new module. 
+- [ ] Review user flows
+- [ ] Technical constraints check
+The architecture needs to support high concurrency...</textarea>
+<div class="flex items-center text-xs text-primary font-medium mt-2">
+<span class="animate-pulse mr-1">|</span> Editing...
+                            </div>
+<div class="flex items-center gap-5 mt-4 pt-2 border-t border-gray-100 dark:border-gray-800">
+<button class="text-text-secondary hover:text-primary transition-colors" title="Expand">
+<span class="material-symbols-outlined text-[20px]">open_in_full</span>
+</button>
+<button class="text-text-secondary hover:text-primary transition-colors" title="Attach">
+<span class="material-symbols-outlined text-[20px]">attach_file</span>
+</button>
+<button class="text-text-secondary hover:text-primary transition-colors" title="Create Task">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</button>
+<button class="text-text-secondary hover:text-red-500 transition-colors" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+<div class="absolute bottom-1 right-1 p-1 cursor-se-resize text-gray-300 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">south_east</span>
+</div>
+</div>
+<div class="group relative bg-white dark:bg-card-dark rounded-xl shadow-tile overflow-hidden hover:shadow-lg transition-shadow border border-transparent hover:border-gray-200 dark:border-gray-800">
+<div class="h-48 bg-cover bg-center w-full" data-alt="Abstract geometric shapes moodboard" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB7e5o7clKMR03aLuFCAnMkXhWqc68_66Vpmy1Xq7XKf3elBP4lA3cm_V688-WjUICmw3yJVUyOuCe1Q3BxVrHKhfxR6vHPD1GxcxGdK57qXaOpO2CL_rddBRoc3vAZvexPLNsFIdeaJmI2hyZDY5Fn7xquH6yogH75BoRj6pIRRiYOcWqpXa6a-C_87EdgHDCHQYaSnxY1bzGhIZvgZie1VQqmurE7Z4riNNGq2p_v9FIcSSu_olxaUZ2FYzZye-m6ZhrUU_w4uTc');">
+<div class="absolute top-4 left-4 p-1 rounded bg-black/20 text-white backdrop-blur-sm cursor-grab hover:bg-black/30 transition-colors">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</div>
+</div>
+<div class="p-6">
+<div class="flex justify-between items-start">
+<div class="flex-1">
+<h3 class="font-bold text-lg mb-2 dark:text-white">Design Inspiration</h3>
+<p class="text-text-secondary text-sm line-clamp-3 mb-4">Collection of geometric patterns and cool color palettes for the upcoming refresh. Need to explore more organic shapes.</p>
+<div class="flex gap-2">
+<span class="px-2 py-1 rounded bg-gray-100 dark:bg-gray-700 text-xs text-text-secondary font-medium">#design</span>
+<span class="px-2 py-1 rounded bg-gray-100 dark:bg-gray-700 text-xs text-text-secondary font-medium">#ideas</span>
+</div>
+</div>
+<button class="opacity-0 group-hover:opacity-100 p-1.5 text-gray-400 hover:text-red-500 transition-all" title="Delete">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<div class="group relative bg-white dark:bg-card-dark rounded-xl shadow-tile p-5 hover:shadow-lg transition-shadow border border-transparent hover:border-gray-200 dark:border-gray-800 flex items-start gap-4">
+<div class="pt-1 cursor-grab text-gray-300 hover:text-primary transition-colors shrink-0">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<h3 class="font-bold text-lg mb-3 dark:text-white">Groceries</h3>
+<button class="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+<ul class="space-y-2 text-text-secondary text-sm">
+<li class="flex items-center gap-2">
+<span class="size-1.5 rounded-full bg-primary"></span> Milk &amp; Eggs
+                                </li>
+<li class="flex items-center gap-2">
+<span class="size-1.5 rounded-full bg-primary"></span> Sourdough Bread
+                                </li>
+<li class="flex items-center gap-2">
+<span class="size-1.5 rounded-full bg-primary"></span> Avocados (3)
+                                </li>
+<li class="flex items-center gap-2">
+<span class="size-1.5 rounded-full bg-primary"></span> Coffee Beans
+                                </li>
+</ul>
+</div>
+</div>
+<div class="group relative bg-[#fff8e1] dark:bg-yellow-900/20 rounded-xl shadow-tile p-6 hover:shadow-lg transition-shadow border border-yellow-200 dark:border-yellow-900/50 flex items-start gap-4">
+<div class="pt-1 cursor-grab text-yellow-700/50 hover:text-yellow-700 transition-colors shrink-0">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</div>
+<div class="flex-1 flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<p class="font-medium text-yellow-900 dark:text-yellow-100 italic text-lg font-serif">"Simplicity is the ultimate sophistication."</p>
+<button class="opacity-0 group-hover:opacity-100 text-yellow-700/60 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+<p class="text-right text-xs text-yellow-800/60 dark:text-yellow-100/50">— Da Vinci</p>
+</div>
+</div>
+<div class="group relative bg-white dark:bg-card-dark rounded-xl shadow-tile p-5 hover:shadow-lg transition-shadow border border-transparent hover:border-gray-200 dark:border-gray-800 flex items-start gap-4">
+<div class="pt-1 cursor-grab text-gray-300 hover:text-primary transition-colors shrink-0">
+<span class="material-symbols-outlined text-[20px]">drag_indicator</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between mb-3">
+<h3 class="font-bold text-lg dark:text-white">Q4 Marketing Sync</h3>
+<div class="flex items-center gap-3">
+<span class="text-xs text-text-secondary bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">Yesterday</span>
+<button class="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+<p class="text-text-secondary text-sm leading-relaxed">
+                                Discussed the new campaign launch timeline. The assets are ready for review. Sarah suggested we focus more on the video content for social channels. 
+                                <br/><br/>
+<strong>Action items:</strong><br/>
+                                - Finalize budget approval<br/>
+                                - Send assets to agency
+                            </p>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed bottom-8 left-1/2 ml-40 transform -translate-x-1/2 w-full max-w-xl z-30 px-4 pointer-events-none">
+<div class="bg-white dark:bg-[#1e2124] rounded-[50px] shadow-float p-2 flex items-center gap-2 border border-gray-100 dark:border-gray-700 pointer-events-auto">
+<button class="p-3 text-text-secondary hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl transition-colors shrink-0" title="Attach File">
+<span class="material-symbols-outlined">attach_file</span>
+</button>
+<div class="flex-1 relative group/input">
+<input class="w-full bg-gray-50 dark:bg-gray-800 border-none rounded-xl py-3 px-4 text-sm focus:ring-2 focus:ring-primary/20 focus:bg-white dark:focus:bg-black/20 transition-all dark:text-white placeholder-gray-400" placeholder="Type a quick note..." type="text"/>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 opacity-0 group-focus-within/input:opacity-100 transition-opacity">
+<kbd class="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-bold text-gray-400 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded shadow-sm">Enter</kbd>
+</div>
+</div>
+<div class="h-8 w-[1px] bg-gray-200 dark:bg-gray-700 mx-1"></div>
+<div class="flex bg-gray-100 dark:bg-gray-800 rounded-[50px] p-1 shrink-0">
+<button class="p-2 rounded-full text-text-secondary hover:text-text-main dark:text-gray-400 dark:hover:text-white transition-colors" title="Tile View">
+<span class="material-symbols-outlined text-[20px]">grid_view</span>
+</button>
+<button class="p-2 rounded-full bg-white dark:bg-gray-700 text-primary shadow-sm transition-all" title="List View">
+<span class="material-symbols-outlined text-[20px]">view_list</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+```</body></html>
